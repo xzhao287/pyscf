@@ -22,12 +22,16 @@ H       -0.0227 1.1812  0.8852
 H       -0.0227 1.1812  -0.8852
             ''',
             basis='3-21g',
-            verbose=4)
+            verbose=2)
 
 numpy.random.seed(1)
 coords = numpy.random.random((5,3)) * 10
 charges = (numpy.arange(5) + 1.) * -.1
 
+print(coords)
+print(charges)
+
 mf = scf.UHF(mol)
 mf = qmmm.mm_charge(mf, coords, charges)
-mf.run()
+mf.kernel()
+print(mf.e_tot)

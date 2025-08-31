@@ -76,6 +76,7 @@ def add_mm_charges(scf_method, atoms_or_coords, charges, radii=None, unit=None):
     >>> mf.kernel()
     -101.940495711284
     '''
+    print('test printing add_mm_charges')
     mol = scf_method.mol
     if unit is None:
         unit = mol.unit
@@ -359,7 +360,7 @@ def qmmm_grad_for_scf(scf_grad):
                 r1 = mol.atom_coord(i)
                 r = lib.norm(r1-coords, axis=1)
                 g_mm[i] = -q1 * numpy.einsum('i,ix,i->x', charges, r1-coords, erf(expnts*r)/r**3)
-                g_mm[i] +=  q1 * lib.einsum('i,ix,i->x', charges * expnts * 2 / numpy.sqrt(numpy.pi), 
+                g_mm[i] +=  q1 * lib.einsum('i,ix,i->x', charges * expnts * 2 / numpy.sqrt(numpy.pi),
                                     r1-coords, numpy.exp(-expnts**2 * r**2)/r**2)
             if atmlst is not None:
                 g_mm = g_mm[atmlst]
@@ -382,7 +383,7 @@ def qmmm_grad_for_scf(scf_grad):
                 r1 = mol.atom_coord(i)
                 r = lib.norm(r1-coords, axis=1)
                 g_mm += q1 * numpy.einsum('i,ix,i->ix', charges, r1-coords, erf(expnts*r)/r**3)
-                g_mm -= q1 * lib.einsum('i,ix,i->ix', charges * expnts * 2 / numpy.sqrt(numpy.pi), 
+                g_mm -= q1 * lib.einsum('i,ix,i->ix', charges * expnts * 2 / numpy.sqrt(numpy.pi),
                                               r1-coords, numpy.exp(-expnts**2 * r**2)/r**2)
             return g_mm
     return QMMM(scf_grad)

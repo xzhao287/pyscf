@@ -121,6 +121,7 @@ Keyword argument "init_dm" is replaced by "dm0"''')
     mol = mf.mol
     if dm0 is None:
         dm = mf.get_init_guess(mol, mf.init_guess)
+        print(f'dm0 is None, dm in kernel is get_init_guess {dm=}')
     else:
         dm = dm0
 
