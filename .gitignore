@@ -88,3 +88,4 @@ tmp/
 # mypy
 .mypy_cache/
 
+/home/xzhao287/pyscf/examples/qmmm/pbc_test
