@@ -691,6 +691,21 @@ def get_ewald_params(cell, precision=None, mesh=None):
         ew_cut = _estimate_rcut(ew_eta**2, 0, 1., precision)
     return ew_eta, ew_cut
 
+MESH_FOR_EWALD = np.array([15] * 3)
+
+def _cut_mesh_for_ewald(cell, mesh):
+    if cell.dimension == 3:
+        return MESH_FOR_EWALD
+
+    mesh = MESH_FOR_EWALD.copy()
+    if (cell.dimension < 2 or
+        (cell.dimension == 2 and cell.low_dim_ft_type == 'inf_vacuum')):
+        mesh[cell.dimension:] = cell.mesh[cell.dimension:]
+    else:  # dimension == 2
+        # roughly 2 grids per bohr
+        mesh[2] = int(np.linalg.norm(cell.lattice_vectors()[2])) * 2 + 1
+    return mesh
+
 def ewald(cell, ew_eta=None, ew_cut=None):
     '''Perform real (R) and reciprocal (G) space Ewald sum for the energy.
 
