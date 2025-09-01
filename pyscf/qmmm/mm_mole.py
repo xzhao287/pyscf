@@ -82,7 +82,7 @@ class Mole(gto.Mole):
         if self.charge_model == 'gaussian':
             return self._env[self._atm[:,gto.PTR_ZETA]]
         else:
-            return 1e16
+            return numpy.ones(self.natm) * 1e16
 
 def create_mm_mol(atoms_or_coords, charges=None, radii=None, unit='Angstrom'):
     '''Create an MM object based on the given coordinates and charges of MM
@@ -97,7 +97,7 @@ def create_mm_mol(atoms_or_coords, charges=None, radii=None, unit='Angstrom'):
         charges : 1D array
             The charges of MM atoms.
         radii : 1D array
-            The Gaussian charge distribution radii of MM atoms.
+            The Gaussian charge distribuction radii of MM atoms.
         unit : string
             The unit of the input. Default is 'Angstrom'.
     '''
